@@ -1,4 +1,5 @@
 # Intro-to-Random-Forests-Machine-Learning
+A simple introduction to machine learning with decision trees and random forests.
 
 We will use panda, and scikit-learn to make predictions on house sales prices.
 
