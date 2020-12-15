@@ -26,6 +26,38 @@ y = home_data.SalePrice  # we want to predict the sale prices, so we set y as th
 features = ['LotArea', 'YearBuilt', '1stFlrSF', '2ndFlrSF', 'FullBath', 'BedroomAbvGr', 'TotRmsAbvGrd']
 X = home_data[features]
 
+# First we want to see the performance of decision trees.
+# As we want to test the performance, We will use the training data which we have the real values for every item.
+# We will use 5% of the training data as the test, so when we do the prediction, we can compare the outcome.
+
+# Split into validation and training data
+train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
+
+# Specify Model
+model = DecisionTreeRegressor(random_state=1)
+# Fit Model
+model.fit(train_X, train_y)
+
+# Make validation predictions and calculate mean absolute error
+val_predictions = model.predict(val_X)
+val_mae = mean_absolute_error(val_predictions, val_y)
+print("Validation MAE when not specifying max_leaf_nodes: {:,.0f}".format(val_mae))
+
+# Using best value for max_leaf_nodes
+model = DecisionTreeRegressor(max_leaf_nodes=100, random_state=1)
+model.fit(train_X, train_y)
+val_predictions = model.predict(val_X)
+val_mae = mean_absolute_error(val_predictions, val_y)
+print("Validation MAE for best value of max_leaf_nodes: {:,.0f}".format(val_mae))
+
+# Define the model. Set random_state to 1
+rf_model = RandomForestRegressor(random_state=1)
+rf_model.fit(train_X, train_y)
+rf_val_predictions = rf_model.predict(val_X)
+rf_val_mae = mean_absolute_error(rf_val_predictions, val_y)
+
+print("Validation MAE for Random Forest Model: {:,.0f}".format(rf_val_mae))
+
 
 # In[17]:
 
